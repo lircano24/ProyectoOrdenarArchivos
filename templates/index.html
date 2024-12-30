@@ -41,15 +41,14 @@
 </head>
 <body>
     <h1>Organizador de Archivos</h1>
-    <p>Selecciona una carpeta o escribe su ruta manualmente:</p>
+    <p>escribe su ruta manualmente:</p>
     <form method="post" action="/organize">
         <input type="text" id="folder_path" name="folder_path" placeholder="Ruta de la carpeta">
-        <button onclick="selectFolder()">Seleccionar Carpeta</button>
         <button type="submit">Organizar</button>
     </form>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-        <div class="    ">
+        <div class="flash">
             <ul>
                 {% for message in messages %}
                     <li>{{ message }}</li>
@@ -58,24 +57,6 @@
         </div>
     {% endif %}
     {% endwith %}
-    <script>
-        async function selectFolder() {
-            // Comprobar si el navegador soporta el API showDirectoryPicker
-            if (window.showDirectoryPicker) {
-                try {
-                    // Abrir el selector de directorios
-                    const directoryHandle = await window.showDirectoryPicker();
-                    // Obtener la ruta del directorio (nombre en este caso)
-                    document.getElementById('folder_path').value = directoryHandle.name;
-                } catch (err) {
-                    console.error("Error al seleccionar la carpeta:", err);
-                }
-            } else {
-                alert("Tu navegador no soporta la selección de carpetas.");
-            }
-        }
-
-       
-    </script>
+    
 </body>
 </html>

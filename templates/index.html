@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Archivos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .flash {
+            color: #d9534f;
+        }
+    </style>
+</head>
+<body>
+    <h1>Organizador de Archivos</h1>
+    <p>Selecciona una carpeta o escribe su ruta manualmente:</p>
+    <form method="post" action="/organize">
+        <input type="text" id="folder_path" name="folder_path" placeholder="Ruta de la carpeta">
+        <button onclick="selectFolder()">Seleccionar Carpeta</button>
+        <button type="submit">Organizar</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="    ">
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    {% endwith %}
+    <script>
+        async function selectFolder() {
+            // Comprobar si el navegador soporta el API showDirectoryPicker
+            if (window.showDirectoryPicker) {
+                try {
+                    // Abrir el selector de directorios
+                    const directoryHandle = await window.showDirectoryPicker();
+                    // Obtener la ruta del directorio (nombre en este caso)
+                    document.getElementById('folder_path').value = directoryHandle.name;
+                } catch (err) {
+                    console.error("Error al seleccionar la carpeta:", err);
+                }
+            } else {
+                alert("Tu navegador no soporta la selección de carpetas.");
+            }
+        }
+
+       
+    </script>
+</body>
+</html>
